@@ -1,0 +1,13 @@
+source $HOME/.zpacker/zpacker.zsh
+
+# syntax highlighting
+zpacker plugin 'zsh-users/zsh-autosuggestions'
+zpacker plugin 'rupa/z'
+zpacker plugin 'zsh-users/zsh-syntax-highlighting'
+
+# local profiles
+zpacker local $HOME/.profile.zsh
+
+zpacker end
+
+eval "$(starship init zsh)"
