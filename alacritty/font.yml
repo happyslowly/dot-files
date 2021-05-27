@@ -1,0 +1,18 @@
+font:
+  normal:
+    family: InputMono Nerd Font
+    style: Light
+
+  bold:
+    family: InputMono Nerd Font
+    style: Regular
+
+  italic:
+    family: InputMono Nerd Font
+    style: Light Italic
+
+  bold_italic:
+    family: InputMono Nerd Font
+    style: Italic
+
+  size: 18.0

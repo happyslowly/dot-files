@@ -1,0 +1,5 @@
+selection:
+  save_to_clipboard: true
+
+scrolling:
+  history: 10000
