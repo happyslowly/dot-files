@@ -10,7 +10,7 @@ endif
 " ----- Plugins ----- {{{
 call plug#begin('~/.vim/plugged')
 
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'scrooloose/nerdtree'
 Plug 'majutsushi/tagbar'
@@ -34,12 +34,12 @@ Plug 'tpope/vim-fireplace'
 Plug 'venantius/vim-cljfmt'
 Plug 'clojure-vim/async-clj-omni'
 Plug 'justmao945/vim-clang'
-"Plug 'dag/vim-fish'
+Plug 'martinda/Jenkinsfile-vim-syntax'
+Plug 'cespare/vim-toml'
 
 " look and feel
 Plug 'luochen1990/rainbow'
 Plug 'arcticicestudio/nord-vim'
-Plug 'ayu-theme/ayu-vim'
 Plug 'itchyny/lightline.vim'
 call plug#end()
 " }}}
@@ -62,26 +62,26 @@ let g:go_highlight_types = 1
 let g:go_highlight_fields = 1
 let g:go_highlight_function_calls = 1
 " Ale
-let g:ale_sign_error = '✗'
-let g:ale_sign_warning = '•'
-let g:ale_linters = {
-            \   'bash': ['shellcheck'],
-            \   'c': ['clang'],
-            \   'clojure': ['joker', 'clj-kondo'],
-            \   'javascript': ['eslint'],
-            \   'json': ['jq'],
-            \   'rust': ['analyzer'],
-            \   'zsh': ['shellcheck'],
-            \}
-let g:ale_fixers = {
-            \ 'javascript': ['eslint'],
-            \ 'json': ['jq'],
-            \ 'python': ['yapf'],
-            \ 'c': ['clang-format'],
-            \}
-let g:ale_fix_on_save = 1
-let g:ale_linters_explicit = 1
-let g:ale_javascript_eslint_use_global = 0
+" let g:ale_sign_error = '✗'
+" let g:ale_sign_warning = '•'
+" let g:ale_linters = {
+"             \   'bash': ['shellcheck'],
+"             \   'c': ['clang'],
+"             \   'clojure': ['joker', 'clj-kondo'],
+"             \   'javascript': ['eslint'],
+"             \   'json': ['jq'],
+"             \   'rust': ['analyzer'],
+"             \   'zsh': ['shellcheck'],
+"             \}
+" let g:ale_fixers = {
+"             \ 'javascript': ['eslint'],
+"             \ 'json': ['jq'],
+"             \ 'python': ['yapf'],
+"             \ 'c': ['clang-format'],
+"             \}
+" let g:ale_fix_on_save = 1
+" let g:ale_linters_explicit = 1
+" let g:ale_javascript_eslint_use_global = 0
 " Rust
 let g:rustfmt_autosave = 1
 " vim-indent-guides
@@ -90,13 +90,15 @@ let g:indent_guides_start_level = 2
 let g:gitgutter_enabled = 0
 " lightline
 let g:lightline = {
-            \ 'colorscheme': 'ayu',
+            \ 'colorscheme': 'nord',
             \ }
 " rainbow
 let g:rainbow_active = 0
 " nord
+let g:nord_bold = 0
 let g:nord_italic = 1
 let g:nord_italic_comments = 1
+let g:nord_cursor_line_number_background = 1
 " delimitMate
 let delimitMate_expand_cr = 1
 let delimitMate_matchpairs = "(:),[:],{:}"
@@ -104,6 +106,11 @@ let delimitMate_matchpairs = "(:),[:],{:}"
 
 " ----- General Key Mappings ----- {{{
 let mapleader = "\<SPACE>"
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
 " toggle search highlight
 nnoremap <C-L> :set hlsearch!<CR>
 " ctags
@@ -139,7 +146,7 @@ nnoremap <LEADER>o :CtrlP<CR>
 " rainbow
 nnoremap <LEADER>pp :RainbowToggle<CR>
 " ale
-nnoremap <LEADER>d :ALEHover<CR>
+nnoremap <LEADER>d :call CocAction('doHover')<CR>
 " fireplace
 noremap <LEADER>v :Eval<CR>
 " Others
@@ -189,13 +196,11 @@ if has("termguicolors")
     set termguicolors
 endif
 set background=dark
-" colorscheme nord
-let ayucolor="mirage"
-colorscheme ayu
-" needed for ayu
-highlight Comment gui=none,italic cterm=none,italic term=none,italic
+colorscheme nord
+" other highlight
+hi CocUnderline gui=undercurl term=undercurl
 
-"set t_Co=256
+set t_Co=256
 if has("gui_running")
     if has("win32")
         set gfn=Consolas:h12:cANSI
@@ -276,19 +281,4 @@ augroup file
     autocmd FileType clojure
                 \ let g:rainbow_active = 1
 augroup end
-" }}}
-
-" ----- Functions ----- {{{
-function! s:show_documentation()
-    if (index(['vim','help'], &filetype) >= 0)
-        execute 'h '.expand('<CWORD>')
-    else
-        call CocAction('doHover')
-    endif
-endfunction
-
-function! s:check_back_space() abort
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
 " }}}
