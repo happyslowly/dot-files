@@ -28,6 +28,7 @@ Plug 'fatih/vim-go'
 Plug 'plasticboy/vim-markdown'
 Plug 'avakhov/vim-yaml'
 Plug 'pangloss/vim-javascript'
+Plug 'leafgarland/typescript-vim'
 Plug 'mxw/vim-jsx'
 Plug 'happyslowly/vim-antlr4'
 Plug 'tpope/vim-fireplace'
@@ -263,7 +264,7 @@ augroup file
     autocmd FileType rust nmap <LEADER>t :Cargo test<CR>
     autocmd FileType rust nmap <LEADER>c :Cargo check<CR>
 
-    autocmd FileType javascript,javascript.jsx
+    autocmd FileType javascript,javascript.jsx,typescript,typescriptreact
                 \ setlocal tabstop=2 shiftwidth=2 softtabstop=2 |
                 \ setlocal foldmethod=syntax
 
