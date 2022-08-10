@@ -3,5 +3,8 @@
   "diagnostic.errorSign": "✗",
   "diagnostic.warningSign": "•",
   "diagnostic.infoSign": "→",
-  "diagnostic.hintSign": "→"
+  "diagnostic.hintSign": "→",
+
+  "suggest.floatEnable": false,
+  "signature.target": "echo"
 }
